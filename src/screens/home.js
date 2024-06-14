@@ -1,8 +1,8 @@
 import React from 'react'
-import { FlatList, StyleSheet, View, Text } from 'react-native'
+import { StatusBar ,FlatList, StyleSheet, View, Text } from 'react-native'
 import CustomButton from '../components/customButton'
 
-const NoteCard = ({ item, setCurrentPage }) => (
+const NoteCard = ({ item, setCurrentPage, setNoteToEdit }) => (
     <View style={styles.card}>
       <Text style={styles.cardTitle}>{item.title}</Text>
       <Text>{item.desc}</Text>
@@ -15,6 +15,7 @@ const NoteCard = ({ item, setCurrentPage }) => (
           width={100}
           onPress={() => {
             setCurrentPage('edit')
+            setNoteToEdit(item)
           }}
         />
         <CustomButton
@@ -29,7 +30,7 @@ const NoteCard = ({ item, setCurrentPage }) => (
     </View>
   )
 
-const Home = ({ noteList, setCurrentPage }) => (
+const Home = ({ noteList, setCurrentPage, setNoteToEdit }) => (
 <View style={styles.container}>
     <CustomButton
     backgroundColor="#DDD"
@@ -44,7 +45,7 @@ const Home = ({ noteList, setCurrentPage }) => (
     showsVerticalScrollIndicator={false}
     data={noteList}
     renderItem={({ item }) => (
-        <NoteCard item={item} setCurrentPage={setCurrentPage} />
+        <NoteCard item={item} setCurrentPage={setCurrentPage} setNoteToEdit={setNoteToEdit} />
     )}
     keyExtractor={(item) => item.id}
     />
@@ -57,6 +58,7 @@ container: {
     flexDirection: 'column',
     justifyContent: 'center',
     padding: 20,
+    marginTop: StatusBar.currentHeight
 },
 card: {
     padding: 10,
