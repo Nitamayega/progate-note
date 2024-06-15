@@ -2,7 +2,7 @@ import React from 'react'
 import { StatusBar ,FlatList, StyleSheet, View, Text } from 'react-native'
 import CustomButton from '../components/customButton'
 
-const NoteCard = ({ item, setCurrentPage, setNoteToEdit }) => (
+const NoteCard = ({ item, setCurrentPage, setNoteToEdit, deleteNote }) => (
     <View style={styles.card}>
       <Text style={styles.cardTitle}>{item.title}</Text>
       <Text>{item.desc}</Text>
@@ -24,13 +24,13 @@ const NoteCard = ({ item, setCurrentPage, setNoteToEdit }) => (
           text="Hapus"
           fontSize={12}
           width={100}
-          onPress={() => {}}
+          onPress={() => {deleteNote(item.id)}}
         />
       </View>
     </View>
   )
 
-const Home = ({ noteList, setCurrentPage, setNoteToEdit }) => (
+const Home = ({ noteList, setCurrentPage, setNoteToEdit, deleteNote }) => (
 <View style={styles.container}>
     <CustomButton
     backgroundColor="#DDD"
@@ -45,7 +45,11 @@ const Home = ({ noteList, setCurrentPage, setNoteToEdit }) => (
     showsVerticalScrollIndicator={false}
     data={noteList}
     renderItem={({ item }) => (
-        <NoteCard item={item} setCurrentPage={setCurrentPage} setNoteToEdit={setNoteToEdit} />
+        <NoteCard 
+          item={item} 
+          setCurrentPage={setCurrentPage} 
+          setNoteToEdit={setNoteToEdit}
+          deleteNote={deleteNote} />
     )}
     keyExtractor={(item) => item.id}
     />
