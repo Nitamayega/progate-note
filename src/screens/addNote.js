@@ -3,9 +3,19 @@ import { View, StyleSheet, Text } from 'react-native'
 import CustomButton from '../components/customButton'
 import CustomTextInput from '../components/customTextInput'
 
+// Component to add a new note
 const AddNote = ({ setCurrentPage, addNote }) => {
   const [title, setTitle] = useState('')
   const [desc, setDesc] = useState('')
+
+  const handleSave = () => {
+    addNote(title, desc);
+    setCurrentPage('home')
+  }
+
+  const handleCancel = () => {
+    setCurrentPage('home')
+  }
 
   return (
     <View style={styles.container}>
@@ -32,10 +42,7 @@ const AddNote = ({ setCurrentPage, addNote }) => {
           color="#fff"
           text="Simpan"
           width="100%"
-          onPress={() => {
-            addNote(title, desc)
-            setCurrentPage('home')
-          }}
+          onPress={handleSave}
         />
       </View>
       <View style={styles.spacerTop}>
@@ -44,7 +51,7 @@ const AddNote = ({ setCurrentPage, addNote }) => {
           color="#203239"
           text="Kembali ke Home"
           width="100%"
-          onPress={() => setCurrentPage('home')}
+          onPress={handleCancel}
         />
       </View>
     </View>

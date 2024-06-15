@@ -3,16 +3,27 @@ import { View, StyleSheet, Text } from 'react-native'
 import CustomButton from '../components/customButton'
 import CustomTextInput from '../components/customTextInput'
 
+// Component to edit an existing note
 const EditNote = ({ setCurrentPage, noteToEdit, editNote }) => {
   const [title, setTitle] = useState(noteToEdit ? noteToEdit.title : '');
   const [desc, setDesc] = useState(noteToEdit ? noteToEdit.desc : '');
 
+  // Set the title and description when the note to edit changes
   useEffect(() => {
     if (noteToEdit) {
-      setTitle(noteToEdit.title);
-      setDesc(noteToEdit.desc);
+      setTitle(noteToEdit.title)
+      setDesc(noteToEdit.desc)
     }
-  }, [noteToEdit]);
+  }, [noteToEdit])
+
+  const handleSave = () => {
+    editNote(noteToEdit.id, title, desc)
+    setCurrentPage('home')
+  }
+
+  const handleCancel = () => {
+    setCurrentPage('home')
+  }
 
   return (
     <View style={styles.container}>
@@ -39,10 +50,7 @@ const EditNote = ({ setCurrentPage, noteToEdit, editNote }) => {
           color="#fff"
           text="Simpan"
           width="100%"
-          onPress={() => {
-            editNote(noteToEdit.id, title, desc)
-            setCurrentPage('home')
-          }}
+          onPress={handleSave}
         />
       </View>
       <View style={styles.spacerTop}>
@@ -51,7 +59,7 @@ const EditNote = ({ setCurrentPage, noteToEdit, editNote }) => {
           color="#203239"
           text="Batalkan"
           width="100%"
-          onPress={() => setCurrentPage('home')}
+          onPress={handleCancel}
         />
       </View>
     </View>
