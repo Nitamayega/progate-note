@@ -2,7 +2,13 @@ import React from 'react'
 import { StatusBar ,FlatList, StyleSheet, View, Text } from 'react-native'
 import CustomButton from '../components/customButton'
 
-const NoteCard = ({ item, setCurrentPage, setNoteToEdit, deleteNote }) => (
+// Component to display each note card
+const NoteCard = ({ 
+  item, 
+  setCurrentPage, 
+  setNoteToEdit, 
+  deleteNote 
+}) => (
     <View style={styles.card}>
       <Text style={styles.cardTitle}>{item.title}</Text>
       <Text>{item.desc}</Text>
@@ -30,6 +36,7 @@ const NoteCard = ({ item, setCurrentPage, setNoteToEdit, deleteNote }) => (
     </View>
   )
 
+// Home component to display list of notes
 const Home = ({ noteList, setCurrentPage, setNoteToEdit, deleteNote }) => (
 <View style={styles.container}>
     <CustomButton
@@ -38,21 +45,25 @@ const Home = ({ noteList, setCurrentPage, setNoteToEdit, deleteNote }) => (
     text="Tambahkan Note"
     width="100%"
     onPress={() => {
-        setCurrentPage('add')
+      setCurrentPage('add')
     }}
     />
-    <FlatList
-    showsVerticalScrollIndicator={false}
-    data={noteList}
-    renderItem={({ item }) => (
-        <NoteCard 
-          item={item} 
-          setCurrentPage={setCurrentPage} 
-          setNoteToEdit={setNoteToEdit}
-          deleteNote={deleteNote} />
+    {noteList.length === 0 ? (
+      <Text style={styles.noNotesText}>Tidak ada catatan.</Text>
+    ) : (
+      <FlatList
+      showsVerticalScrollIndicator={false}
+      data={noteList}
+      renderItem={({ item }) => (
+          <NoteCard 
+            item={item} 
+            setCurrentPage={setCurrentPage} 
+            setNoteToEdit={setNoteToEdit}
+            deleteNote={deleteNote} />
+      )}
+      keyExtractor={(item) => item.id}
+      />
     )}
-    keyExtractor={(item) => item.id}
-    />
 </View>
 )
   
@@ -82,6 +93,12 @@ buttons: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-evenly',
+},
+noNotesText: {
+  textAlign: 'center',
+  color: '#203239',
+  fontSize: 18,
+  marginTop: 20,
 },
 })
 
